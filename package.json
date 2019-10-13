@@ -1,0 +1,22 @@
+{
+  "name": "dont-sleep",
+  "version": "1.0.0",
+  "description": "find top players avaiable for your sleeper.app league",
+  "main": "scrape.js",
+  "scripts": {
+    "scrape": "node scrape.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcowen91/dont-sleep.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dcowen91/dont-sleep/issues"
+  },
+  "homepage": "https://github.com/dcowen91/dont-sleep#readme",
+  "dependencies": {
+    "puppeteer": "^1.20.0"
+  }
+}
