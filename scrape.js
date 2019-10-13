@@ -4,8 +4,19 @@ const puppeteer = require("puppeteer");
   const browser = await puppeteer.launch({ headless: false, slowMo: 250 });
   const page = await browser.newPage();
 
+  // TODO scrape all pages
+  // TODO support PPR/HALF-PPR, NON-PPR etc
+  // TODO by default just use PPR until build more sophisticated
+  const pages = {
+    QB: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_QB.txt",
+    RB: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_RB.txt",
+    RBPPR: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_RB-PPR.txt",
+    "RB-HALF-PPR":
+      "https://s3-us-west-1.amazonaws.com/fftiers/out/text_RB-HALF.txt"
+  };
+
   // TODO fetch other positions
-  await page.goto("https://s3-us-west-1.amazonaws.com/fftiers/out/text_QB.txt");
+  await page.goto(Pages.QB);
 
   const results = await page.evaluate(() => {
     const players = [];
@@ -29,7 +40,7 @@ const puppeteer = require("puppeteer");
     return players;
   });
 
-  console.log(JSON.stringify({ results: results }));
+  console.log(JSON.stringify({ [Pages.QB]: results }));
 
   // TODO save to file
   // TODO firebase
