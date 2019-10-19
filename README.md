@@ -20,3 +20,14 @@ cloud function 2
 -> given user input (leagueid, team id), call sleeper API
 -> get league data (team rosters, lineup/scoring settings)
 -> call from app https://firebase.google.com/docs/functions/callable
+
+## questions?
+
+store sleeper data in firestore?
+compute sleeper/borischen merge in cloud function?
+how exactly to correlate players from two sources?
+
+## instructions
+
+how to get team/league id:
+mobile app -> "Team" -> Share -> copy to clipboard
