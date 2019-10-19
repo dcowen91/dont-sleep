@@ -1,16 +1,14 @@
 var rp = require("request-promise-native");
 
-// TODO support PPR/HALF-PPR, NON-PPR etc
-// TODO by default just use PPR until build more sophisticated
+// TODO support HALF-PPR, STANDARD
 const Pages = {
   QB: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_QB.txt",
-  // RB: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_RB.txt",
   WRPPR: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_WR-PPR.txt",
   TEPPR: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_TE-PPR.txt",
   DST: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_DST.txt",
   RBPPR: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_RB-PPR.txt"
-  // "RB-HALF-PPR":
-  //   "https://s3-us-west-1.amazonaws.com/fftiers/out/text_RB-HALF.txt"
+  // RB: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_RB.txt",
+  // "RB-HALF-PPR":"https://s3-us-west-1.amazonaws.com/fftiers/out/text_RB-HALF.txt"
 };
 
 async function scrapePosition(position) {
@@ -20,6 +18,7 @@ async function scrapePosition(position) {
   for (let i = 0; i < tiers.length; i++) {
     const currentTier = tiers[i].match(/Tier ([0-9]+)\:/)[1];
     const playersInTier = tiers[i].replace(/(Tier [0-9]+\:)/, "").split(",");
+
     for (let j = 0; j < playersInTier.length; j++) {
       players.push({
         tier: currentTier,
@@ -31,7 +30,7 @@ async function scrapePosition(position) {
   return players;
 }
 
-async function getSomeData() {
+async function getRankings() {
   const collection = {};
   for (const position of Object.keys(Pages)) {
     const players = await scrapePosition(position);
@@ -41,7 +40,7 @@ async function getSomeData() {
   console.log(JSON.stringify(collection));
 }
 
-getSomeData();
+getRankings();
 
 // TODO save to file
 // TODO firebase
