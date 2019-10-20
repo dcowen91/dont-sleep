@@ -1,10 +1,11 @@
 {
   "name": "dont-sleep",
   "version": "1.0.0",
-  "description": "find top players avaiable for your sleeper.app league",
+  "description": "find top players available for your sleeper.app league",
   "main": "scrape.js",
   "scripts": {
-    "scrape": "node scrape.js"
+    "get-tiers": "node src/scrape.js > dist/tiers.json",
+    "get-players": "node src/fetch-sleeper.js > dist/players.json"
   },
   "repository": {
     "type": "git",

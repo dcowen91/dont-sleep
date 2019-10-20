@@ -20,4 +20,4 @@ const user_id = "";
 // rp(` https://api.sleeper.app/v1/user/${user_id}`).then(console.log);
 
 // get all players in NFL (call infrequently, store in firebase)
-// p(`https://api.sleeper.app/v1/players/nfl`).then(console.log);
+rp(`https://api.sleeper.app/v1/players/nfl`).then(console.log);
