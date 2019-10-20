@@ -11,6 +11,21 @@ const Pages = {
   // "RB-HALF-PPR":"https://s3-us-west-1.amazonaws.com/fftiers/out/text_RB-HALF.txt"
 };
 
+/**
+ * Strip out all non-letters
+ */
+function getSeachName(name) {
+  return name.replace(/['.-\s]/g, "");
+}
+
+/**
+ * Given "New England Patriots", return "Patriots"
+ */
+function getTeamName(name) {
+  const words = name.split(" ");
+  return words[words.length - 1];
+}
+
 async function scrapePosition(position) {
   const data = await rp(Pages[position]);
   const players = [];
@@ -20,10 +35,12 @@ async function scrapePosition(position) {
     const playersInTier = tiers[i].replace(/(Tier [0-9]+\:)/, "").split(",");
 
     for (let j = 0; j < playersInTier.length; j++) {
+      const name = playersInTier[j].trim();
       players.push({
         tier: currentTier,
         rank: players.length + 1,
-        name: playersInTier[j].trim()
+        name: name,
+        searchName: position === "DST" ? getTeamName(name) : getSeachName(name)
       });
     }
   }
