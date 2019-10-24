@@ -5,7 +5,8 @@
   "main": "scrape.js",
   "scripts": {
     "get-tiers": "node src/scrape.js > dist/tiers.json",
-    "get-players": "node src/fetch-sleeper.js > dist/players.json"
+    "get-players": "node src/fetch-sleeper.js > dist/players.json",
+    "merge-players": "node src/merge.js"
   },
   "repository": {
     "type": "git",
