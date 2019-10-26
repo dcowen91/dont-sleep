@@ -6,6 +6,7 @@
   "scripts": {
     "get-tiers": "node src/scrape.js > dist/tiers.json",
     "get-players": "node src/fetch-sleeper.js > dist/players.json",
+    "fetch-rosters": "node src/fetch-rosters.js > dist/roster-data.json",
     "merge-players": "node src/merge.js > dist/merged.json"
   },
   "repository": {

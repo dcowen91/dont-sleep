@@ -27,6 +27,13 @@ store sleeper data in firestore?
 compute sleeper/borischen merge in cloud function?
 how exactly to correlate players from two sources?
 
+## curent steps:
+
+1. npm run get-tiers
+2. npm run get-players
+3. npm run fetch-rosters
+4. npm run merge-players
+
 ## instructions
 
 how to get team/league id:
