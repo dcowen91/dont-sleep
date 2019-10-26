@@ -13,7 +13,8 @@ for (let position in tiers) {
       if (!!searchPlayer.search_full_name) {
         return (
           searchPlayer.search_full_name.toLowerCase() ===
-          player.searchName.toLowerCase()
+            player.searchName.toLowerCase() &&
+          position.toString().includes(searchPlayer.position.toString())
         );
       }
       return (
