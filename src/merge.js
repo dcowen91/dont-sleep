@@ -4,22 +4,28 @@ const playerIds = require("../dist/players");
 
 const playerIdArray = Object.values(playerIds);
 
-const output = {};
-
 for (let position in tiers) {
-  //   console.log(position);
   const players = tiers[position];
 
-  // TODO clean this up and fix for DST
-  players.forEach(player => {
-    const playerMatch = playerIdArray.find(
-      searchPlayer =>
-        searchPlayer.search_full_name.toLowerCase() ===
-        player.searchName.toLowerCase()
-    );
+  players.forEach((player, index) => {
+    const playerMatch = playerIdArray.find(searchPlayer => {
+      if (!!searchPlayer.search_full_name) {
+        return (
+          searchPlayer.search_full_name.toLowerCase() ===
+          player.searchName.toLowerCase()
+        );
+      }
+      return (
+        searchPlayer.last_name.toLowerCase() === player.searchName.toLowerCase()
+      );
+    });
 
-    console.log(
-      `${player.searchName}: ${playerMatch && playerMatch.player_id}`
-    );
+    if (playerMatch) {
+      tiers[position][index].playerId = playerMatch.player_id;
+    } else {
+      tiers[position][index].playerId = "MISS";
+    }
   });
 }
+
+console.log(JSON.stringify(tiers));
