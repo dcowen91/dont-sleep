@@ -7,7 +7,8 @@
     "get-tiers": "node src/scrape.js > dist/tiers.json",
     "get-players": "node src/fetch-sleeper.js > dist/players.json",
     "fetch-rosters": "node src/fetch-rosters.js > dist/roster-data.json",
-    "merge-players": "node src/merge.js > dist/merged.json"
+    "merge-players": "node src/merge.js > dist/merged.json",
+    "report": "node src/report.js"
   },
   "repository": {
     "type": "git",
