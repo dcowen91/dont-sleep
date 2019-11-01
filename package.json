@@ -4,7 +4,7 @@
   "description": "find top players available for your sleeper.app league",
   "main": "scrape.js",
   "scripts": {
-    "get-tiers": "node src/scrape.js > dist/tiers.json",
+    "get-tiers": "node src/scrape.js",
     "get-players": "node src/fetch-sleeper.js > dist/players.json",
     "fetch-rosters": "node src/fetch-rosters.js > dist/roster-data.json",
     "merge-players": "node src/merge.js > dist/merged.json",
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/dcowen91/dont-sleep#readme",
   "dependencies": {
     "firebase-admin": "^8.6.1",
+    "firebase-functions": "^3.3.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7"
   }

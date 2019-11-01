@@ -38,3 +38,7 @@ how exactly to correlate players from two sources?
 
 how to get team/league id:
 mobile app -> "Team" -> Share -> copy to clipboard
+
+## TODO
+
+1. add typescript

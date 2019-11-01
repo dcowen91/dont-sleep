@@ -1,4 +1,10 @@
-var rp = require("request-promise-native");
+const rp = require("request-promise-native");
+const admin = require("firebase-admin");
+const functions = require("firebase-functions");
+
+admin.initializeApp(functions.config().firebase);
+
+let db = admin.firestore();
 
 // TODO support HALF-PPR, STANDARD
 const Pages = {
@@ -54,10 +60,9 @@ async function getRankings() {
     collection[position] = players;
   }
 
-  console.log(JSON.stringify(collection));
+  let docRef = db.collection("rankings").doc("tiers");
+
+  docRef.set(collection);
 }
 
 getRankings();
-
-// TODO save to file
-// TODO firebase
