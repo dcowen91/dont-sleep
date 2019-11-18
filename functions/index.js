@@ -13,8 +13,6 @@ const Pages = {
   TEPPR: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_TE-PPR.txt",
   DST: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_DST.txt",
   RBPPR: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_RB-PPR.txt"
-  // RB: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_RB.txt",
-  // "RB-HALF-PPR":"https://s3-us-west-1.amazonaws.com/fftiers/out/text_RB-HALF.txt"
 };
 
 /**
@@ -33,7 +31,9 @@ function getTeamName(name) {
 }
 
 async function scrapePosition(position) {
+  console.log("REQUESTING " + position);
   const data = await rp(Pages[position]);
+  console.log("PARSING" + position);
   const players = [];
   const tiers = data.trim().split("\n");
   for (let i = 0; i < tiers.length; i++) {
@@ -50,31 +50,48 @@ async function scrapePosition(position) {
       });
     }
   }
+
+  console.log("RETURNING " + players.length + "for " + position);
   return players;
 }
 
 async function getRankings() {
+  console.log("STARTING");
   const collection = {};
   for (const position of Object.keys(Pages)) {
+    console.log("FETCHING " + position);
     const players = await scrapePosition(position);
     collection[position] = players;
+    console.log(`WROTE:  ${position} (${players.length} count)`);
   }
 
-  console.log("setting");
+  console.log("WRITING TIMESTAMP");
+  collection["fetchedOn"] = new Date().toString();
+
+  console.log("SETTING THE VALUE");
 
   let docRef = db.collection("rankings").doc("tiers");
+  return docRef.set(collection).then(response => {
+    console.log("WROTE TO DB");
+    console.dir(response);
 
-  return docRef.set(collection);
+    return "SUCCESSFUL OPERATION";
+  });
 }
 
 exports.scrapePlayersSchedule = functions.pubsub
   .schedule("every 12 hours")
   .onRun(context => {
-    getRankings()
+    console.log("STARTING TO RUN");
+    console.log("CONTEXT:");
+    console.dir(context);
+    return getRankings()
       .then(res => {
+        console.log("SUCCESSFULLY RAN");
         return console.log(res);
       })
       .catch(err => {
+        console.log("ERROR CAUGHT");
         return console.error(err);
       });
   });
