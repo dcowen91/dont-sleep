@@ -3,7 +3,6 @@ const admin = require("firebase-admin");
 const rp = require("request-promise-native");
 
 admin.initializeApp();
-
 let db = admin.firestore();
 
 // TODO support HALF-PPR, STANDARD
