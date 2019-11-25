@@ -94,3 +94,30 @@ exports.scrapePlayersSchedule = functions.pubsub
         return console.error(err);
       });
   });
+
+exports.mergeData = functions.firestore
+  .document("/rankings/tiers/{position}/{player}")
+  .onUpdate((change, context) => {
+    const positionFriendlyName = context.params.position.replace("PPR", "");
+    const playerData = change.after.data();
+    const docRef = db.collection("/sleeperData");
+
+    return docRef
+      .where("search_full_name", "==", playerData.searchName)
+      .where("position", "==", positionFriendlyName)
+      .get()
+      .then(doc => {
+        if (!doc.exists) {
+          return console.log(
+            "NO MATCH for " +
+              context.params.postions +
+              ":" +
+              context.params.player
+          );
+        } else {
+          return change.after.ref.set({
+            playerId: doc.player_id
+          });
+        }
+      });
+  });

@@ -27,12 +27,18 @@ store sleeper data in firestore?
 compute sleeper/borischen merge in cloud function?
 how exactly to correlate players from two sources?
 
-## curent steps:
+## old manual steps:
 
 1. npm run get-tiers
 2. npm run get-players
 3. npm run fetch-rosters
 4. npm run merge-players
+
+## firebase info:
+
+1. scrapePlayersSchedule (cloud function) runs every 12 hours to pull latest tiers into firestore
+2. manual npm run get-players to pull nfl db into firebase- don't do that often
+3.
 
 ## instructions
 
