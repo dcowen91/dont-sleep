@@ -96,6 +96,22 @@ async function getRankings() {
   });
 }
 
+async function getRosterInfo(leagueId, userId) {
+  const data = await rp(
+    `https://api.sleeper.app/v1/league/${leagueId}/rosters`
+  );
+  var teams = JSON.parse(data);
+
+  const userOwnedPlayers = teams.find(team => team.owner_id === userId).players;
+
+  const allOwnedPlayers = teams.map(team => team.players);
+  var merged = [].concat.apply([], allOwnedPlayers).sort();
+
+  const output = { userOwnedPlayers: userOwnedPlayers, ownedPlayers: merged };
+  return output;
+  // return JSON.stringify(output);
+}
+
 exports.scrapePlayersSchedule = functions.pubsub
   .schedule("every 12 hours")
   .onRun(_context => {
@@ -109,3 +125,12 @@ exports.scrapePlayersSchedule = functions.pubsub
         return console.error(err);
       });
   });
+
+exports.fetchRosters = functions.https.onRequest(async (req, res) => {
+  const leagueId = req.query.leagueId;
+  const userId = req.query.userId;
+
+  const response = getRosterInfo(leagueId, userId);
+
+  res.status(200).send(response);
+});
