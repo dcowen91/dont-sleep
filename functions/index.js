@@ -18,7 +18,7 @@ const Pages = {
  * Strip out all non-letters
  */
 function getSeachName(name) {
-  return name.replace(/['.-\s]/g, "");
+  return name.replace(/['.-\s]/g, "").toLowerCase();
 }
 
 /**
@@ -30,94 +30,82 @@ function getTeamName(name) {
 }
 
 async function scrapePosition(position) {
-  console.log("REQUESTING " + position);
   const data = await rp(Pages[position]);
-  console.log("PARSING" + position);
   const players = [];
   const tiers = data.trim().split("\n");
+  const isDEF = position === "DST";
+  const positionFriendlyName = isDEF ? "DEF" : position.replace("PPR", "");
+
+  const docRef = db.collection("sleeperData");
+  console.log("SCRAPING " + positionFriendlyName);
+
   for (let i = 0; i < tiers.length; i++) {
     const currentTier = tiers[i].match(/Tier ([0-9]+):/)[1];
     const playersInTier = tiers[i].replace(/(Tier [0-9]+:)/, "").split(",");
 
     for (let j = 0; j < playersInTier.length; j++) {
       const name = playersInTier[j].trim();
+
+      const searchName = isDEF ? getTeamName(name) : getSeachName(name);
+      const searchField = isDEF ? "last_name" : "search_full_name";
+      const queryResult = await docRef
+        .where(searchField, "==", searchName)
+        .where("position", "==", positionFriendlyName)
+        .get()
+        .then(snapshot => {
+          if (snapshot.size !== 1) {
+            console.log(
+              `ERROR: ${snapshot.size} MATCHES ${positionFriendlyName}:${searchName}`
+            );
+            return null;
+          } else {
+            return snapshot.docs[0].data();
+          }
+        });
+
+      const playerId = queryResult ? queryResult.player_id : "-1";
+
       players.push({
         tier: currentTier,
         rank: players.length + 1,
         name: name,
-        searchName: position === "DST" ? getTeamName(name) : getSeachName(name)
+        searchName: searchName,
+        playerId: playerId
       });
     }
   }
 
-  console.log("RETURNING " + players.length + "for " + position);
   return players;
 }
 
 async function getRankings() {
-  console.log("STARTING");
+  console.log("STARTING GETRANKINGS");
   const collection = {};
   for (const position of Object.keys(Pages)) {
-    console.log("FETCHING " + position);
     const players = await scrapePosition(position);
     collection[position] = players;
     console.log(`WROTE:  ${position} (${players.length} count)`);
   }
-
-  console.log("WRITING TIMESTAMP");
   collection["fetchedOn"] = new Date().toString();
 
-  console.log("SETTING THE VALUE");
+  console.log("WRITING TO DB");
 
   let docRef = db.collection("rankings").doc("tiers");
-  return docRef.set(collection).then(response => {
-    console.log("WROTE TO DB");
-    console.dir(response);
-
-    return "SUCCESSFUL OPERATION";
+  return docRef.set(collection).then(() => {
+    return console.log("WROTE TO DB");
   });
 }
 
 exports.scrapePlayersSchedule = functions.pubsub
   .schedule("every 12 hours")
-  .onRun(context => {
+  .onRun(_context => {
     console.log("STARTING TO RUN");
-    console.log("CONTEXT:");
-    console.dir(context);
     return getRankings()
-      .then(res => {
-        console.log("SUCCESSFULLY RAN");
-        return console.log(res);
+      .then(() => {
+        return console.log("SUCCESSFULLY RAN");
       })
       .catch(err => {
         console.log("ERROR CAUGHT");
         return console.error(err);
-      });
-  });
-
-exports.mergeData = functions.firestore
-  .document("/rankings/tiers/{position}/{player}")
-  .onUpdate((change, context) => {
-    const positionFriendlyName = context.params.position.replace("PPR", "");
-    const playerData = change.after.data();
-    const docRef = db.collection("/sleeperData");
-
-    return docRef
-      .where("search_full_name", "==", playerData.searchName)
-      .where("position", "==", positionFriendlyName)
-      .get()
-      .then(doc => {
-        if (!doc.exists) {
-          return console.log(
-            "NO MATCH for " +
-              context.params.postions +
-              ":" +
-              context.params.player
-          );
-        } else {
-          return change.after.ref.set({
-            playerId: doc.player_id
-          });
-        }
       });
   });

@@ -5,6 +5,7 @@
   "main": "scrape.js",
   "scripts": {
     "get-players": "node src/fetch-sleeper.js",
+    "test": "node src/test.js",
     "fetch-rosters": "node src/fetch-rosters.js > dist/roster-data.json",
     "merge-players": "node src/merge.js > dist/merged.json",
     "report": "node src/report.js"
