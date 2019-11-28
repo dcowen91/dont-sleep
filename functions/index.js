@@ -127,10 +127,13 @@ exports.scrapePlayersSchedule = functions.pubsub
   });
 
 exports.fetchRosters = functions.https.onRequest(async (req, res) => {
+  // https://us-central1-dont-sleep-92c89.cloudfunctions.net/fetchRosters?leagueId=469392385332211712&userId=470018338567745536
   const leagueId = req.query.leagueId;
   const userId = req.query.userId;
 
-  const response = getRosterInfo(leagueId, userId);
+  console.log(`FETCHROSTERS got request for: ${leagueId}.${userId}`);
+
+  const response = await getRosterInfo(leagueId, userId);
 
   res.status(200).send(response);
 });
