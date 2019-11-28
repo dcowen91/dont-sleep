@@ -6,23 +6,26 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
+//test file to check firebase/firestore functionality in node
+
 let db = admin.firestore();
 
 const docRef = db.collection("sleeperData");
-const positionFriendlyName = "DST";
-const searchName = "Patriots";
+const positionFriendlyName = "WR";
+const searchName = "mikewilliams";
 
 return docRef
-  .where("last_name", "==", searchName)
+  .where("search_full_name", "==", searchName)
+  .where("position", "==", positionFriendlyName)
   .get()
   .then(snapshot => {
-    if (snapshot.empty) {
-      console.log(`NO MATCH ${positionFriendlyName}:${searchName}`);
-      return null;
-    } else if (snapshot.size !== 1) {
+    if (snapshot.size !== 1) {
       console.log(
         `${snapshot.size} MATCHES ${positionFriendlyName}:${searchName}`
       );
+      for (let i = 0; i < snapshot.size; i++) {
+        console.log(snapshot.docs[i].data());
+      }
     } else {
       console.log(`FOUND MATCH ${positionFriendlyName}:${searchName}`);
       console.log(snapshot.docs[0].data());
