@@ -107,9 +107,25 @@ async function getRosterInfo(leagueId, userId) {
   const allOwnedPlayers = teams.map(team => team.players);
   var merged = [].concat.apply([], allOwnedPlayers).sort();
 
-  const output = { userOwnedPlayers: userOwnedPlayers, ownedPlayers: merged };
+  const tiers = await db
+    .collection("rankings")
+    .doc("tiers")
+    .get();
+
+  const output = {};
+
+  for (let position in tiers) {
+    const players = data[position];
+    const owned = players.filter(player =>
+      userOwnedPlayers.includes(player.playerId)
+    );
+
+    const unowned = players.filter(player => !merged.includes(player.playerId));
+
+    output[position] = { owned, unowned };
+  }
+
   return output;
-  // return JSON.stringify(output);
 }
 
 exports.scrapePlayersSchedule = functions.pubsub
