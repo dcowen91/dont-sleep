@@ -107,15 +107,19 @@ async function getRosterInfo(leagueId, userId) {
   const allOwnedPlayers = teams.map(team => team.players);
   var merged = [].concat.apply([], allOwnedPlayers).sort();
 
+  console.log("reading tiers from db");
+
   const tiers = await db
     .collection("rankings")
     .doc("tiers")
-    .get();
+    .get()
+    .then(snapshot => snapshot.data());
 
   const output = {};
 
-  for (let position in tiers) {
-    const players = data[position];
+  for (const position of Object.keys(Pages)) {
+    const players = tiers[position];
+    console.log(`filtering: ${position} ( ${players.length} length)`);
     const owned = players.filter(player =>
       userOwnedPlayers.includes(player.playerId)
     );
