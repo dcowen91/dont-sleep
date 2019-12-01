@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/dcowen91/dont-sleep#readme",
   "dependencies": {
+    "evergreen-ui": "^4.21.5",
     "firebase-admin": "^8.6.1",
     "firebase-functions": "^3.3.0",
     "react": "^16.12.0",
