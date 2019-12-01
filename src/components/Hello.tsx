@@ -24,8 +24,8 @@ interface Position {
 type SleeperData = { [pos: string]: Position };
 
 export const Hello = () => {
-  const [leagueId, setLeagueId] = React.useState("");
-  const [userId, setuserId] = React.useState("");
+  const [leagueId, setLeagueId] = React.useState(""); // 469392385332211712
+  const [userId, setuserId] = React.useState(""); //  470018338567745536;
   const [playerData, setPlayerData] = React.useState<SleeperData>({});
   // setPlayerData(require("../../dist/testdata.json"))
   return (
@@ -36,7 +36,7 @@ export const Hello = () => {
         justifyContent="center"
         flexDirection="column"
       >
-        <Heading>Don't Sleep</Heading>
+        <Heading>Don't sleep</Heading>
         <Text>A tool to help power up your fantasy football teams</Text>
       </Pane>
       <Pane
