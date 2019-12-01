@@ -47,4 +47,9 @@ mobile app -> "Team" -> Share -> copy to clipboard
 
 ## TODO
 
-1. add typescript
+1. add typescript to scripts?
+2. add more styling to app (player section)
+3. add lastModifiedTime
+4. add github link
+5. add info on how to use
+6. add error handling (league/userId)
