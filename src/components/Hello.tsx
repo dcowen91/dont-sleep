@@ -5,7 +5,8 @@ import {
   Heading,
   Text,
   Button,
-  Card
+  Card,
+  Strong
 } from "evergreen-ui";
 
 interface Player {
@@ -26,8 +27,8 @@ type SleeperData = { [pos: string]: Position };
 export const Hello = () => {
   const [leagueId, setLeagueId] = React.useState(""); // 469392385332211712
   const [userId, setuserId] = React.useState(""); //  470018338567745536;
-  const [playerData, setPlayerData] = React.useState<SleeperData>({});
-  // setPlayerData(require("../../dist/testdata.json"))
+  const [playerData, setPlayerData] = React.useState<SleeperData>({}); // "dist/testdata.json"
+
   return (
     <>
       <Pane
@@ -76,29 +77,39 @@ export const Hello = () => {
           Go!
         </Button>
       </Pane>
-      {Object.keys(playerData).length > 1 && (
-        <Card>
-          <Heading>Tiers</Heading>
-          {Object.keys(playerData).map(position => {
-            return (
-              <>
-                <Heading>{position}</Heading>
-                <Text>Your Players</Text>
-                {playerData[position].owned.map(renderPlayer)}
-                <Text>Available Players</Text>
-                {playerData[position].unowned.map(renderPlayer)}
-              </>
-            );
-          })}
-        </Card>
-      )}
+      <Pane display="flex" alignItems="center" justifyContent="center">
+        {Object.keys(playerData).length > 1 && (
+          <>
+            {Object.keys(playerData).map(position => {
+              return (
+                <Pane
+                  display="flex"
+                  justifyContent="center"
+                  flexDirection="column"
+                  padding={16}
+                  margin={16}
+                  flexWrap="wrap"
+                  background="tealTint"
+                >
+                  <Heading>{position}</Heading>
+                  <Strong>Your Players</Strong>
+                  {playerData[position].owned.map(renderPlayer)}
+                  <Strong>Available Players</Strong>
+                  {playerData[position].unowned.map(renderPlayer)}
+                </Pane>
+              );
+            })}
+          </>
+        )}
+      </Pane>
     </>
   );
 };
 
 function renderPlayer(player: Player): JSX.Element {
+  // TODO convert to table
   return (
-    <Card>
+    <Card display="flex" flexDirection="row" justifyContent="space-between">
       <Text>{player.name}</Text>
       <Text>{"Rank: " + player.rank}</Text>
       <Text>{"Tier: " + player.tier}</Text>
