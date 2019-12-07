@@ -5,8 +5,8 @@ import {
   Heading,
   Text,
   Button,
-  Card,
-  Strong
+  Strong,
+  Table
 } from "evergreen-ui";
 
 interface Player {
@@ -24,11 +24,14 @@ interface Position {
 
 type SleeperData = { [pos: string]: Position };
 
+const OrderedPostions = ["QB", "RBPPR", "WRPPR", "TEPPR", "DST"];
+
+// const testData = require("../../dist/testdata.json");
+
 export const Hello = () => {
   const [leagueId, setLeagueId] = React.useState(""); // 469392385332211712
   const [userId, setuserId] = React.useState(""); //  470018338567745536;
-  const [playerData, setPlayerData] = React.useState<SleeperData>({}); // "dist/testdata.json"
-
+  const [playerData, setPlayerData] = React.useState<SleeperData>({});
   return (
     <>
       <Pane
@@ -77,42 +80,84 @@ export const Hello = () => {
           Go!
         </Button>
       </Pane>
-      <Pane display="flex" alignItems="center" justifyContent="center">
-        {Object.keys(playerData).length > 1 && (
-          <>
-            {Object.keys(playerData).map(position => {
-              return (
-                <Pane
-                  display="flex"
-                  justifyContent="center"
-                  flexDirection="column"
-                  padding={16}
-                  margin={16}
-                  flexWrap="wrap"
-                  background="tealTint"
-                >
-                  <Heading>{position}</Heading>
-                  <Strong>Your Players</Strong>
-                  {playerData[position].owned.map(renderPlayer)}
-                  <Strong>Available Players</Strong>
-                  {playerData[position].unowned.map(renderPlayer)}
-                </Pane>
-              );
-            })}
-          </>
-        )}
+      <Pane
+        display="flex"
+        alignItems="flex-start"
+        justifyContent="center"
+        flexWrap="wrap"
+      >
+        {Object.keys(playerData).length > 1 &&
+          OrderedPostions.map(position =>
+            renderPositionCard(position, playerData)
+          )}
       </Pane>
     </>
   );
 };
 
-function renderPlayer(player: Player): JSX.Element {
-  // TODO convert to table
+function renderPositionCard(
+  position: string,
+  playerData: SleeperData
+): JSX.Element {
+  const lowestOwnedRank =
+    playerData[position].owned[playerData[position].owned.length - 1].rank;
   return (
-    <Card display="flex" flexDirection="row" justifyContent="space-between">
-      <Text>{player.name}</Text>
-      <Text>{"Rank: " + player.rank}</Text>
-      <Text>{"Tier: " + player.tier}</Text>
-    </Card>
+    <Pane
+      display="flex"
+      justifyContent="center"
+      flexDirection="column"
+      padding={8}
+      margin={8}
+      flexWrap="wrap"
+      borderRadius={5}
+      border
+      elevation={1}
+      flexBasis={250}
+    >
+      <Heading alignSelf={"center"}>{position.replace("PPR", "")}</Heading>
+      {renderTableSection("Your Players", playerData[position].owned)}
+      {renderTableSection(
+        "Available Players",
+        playerData[position].unowned,
+        lowestOwnedRank
+      )}
+    </Pane>
+  );
+}
+
+function renderTableSection(
+  title: string,
+  players: Player[],
+  lowestOwnedRank?: number
+): JSX.Element {
+  return (
+    <>
+      <Strong marginTop={10} marginBottom={5}>
+        {title}
+      </Strong>
+      <Table>
+        <Table.Head>
+          <Table.TextHeaderCell flexBasis={120}>{title}</Table.TextHeaderCell>
+          <Table.TextHeaderCell>Rank</Table.TextHeaderCell>
+          <Table.TextHeaderCell>Tier</Table.TextHeaderCell>
+        </Table.Head>
+        <Table.Body>
+          {players.map(player => renderPlayer(player, lowestOwnedRank))}
+        </Table.Body>
+      </Table>
+    </>
+  );
+}
+
+function renderPlayer(player: Player, lowestOwnedRank?: number): JSX.Element {
+  const intent =
+    !!lowestOwnedRank && lowestOwnedRank > player.rank ? "success" : "none";
+
+  return (
+    <Table.Row intent={intent}>
+      <Table.TextCell flexBasis={120}>{player.name}</Table.TextCell>
+      <Table.TextCell>{player.rank}</Table.TextCell>
+      <Table.TextCell>{player.tier}</Table.TextCell>
+    </Table.Row>
   );
 }
