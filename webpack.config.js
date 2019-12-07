@@ -1,9 +1,8 @@
 const path = require("path");
 
-const isDevMode = process.env.NODE_ENV === "development";
-
 module.exports = {
-  mode: isDevMode ? "development" : "production",
+  mode:
+    process.env.npm_lifecycle_event === "start" ? "development" : "production",
   devtool: "source-map",
   entry: "./src/App.tsx",
   resolve: {

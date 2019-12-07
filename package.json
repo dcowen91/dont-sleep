@@ -8,7 +8,7 @@
     "test": "node src/test.js",
     "build": "webpack",
     "start": "webpack-dev-server",
-    "deploy": "webpack && firebase deploy"
+    "deploy": "webpack && firebase deploy --only hosting"
   },
   "repository": {
     "type": "git",
