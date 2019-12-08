@@ -6,7 +6,7 @@ const cors = require("cors")({ origin: true });
 admin.initializeApp();
 let db = admin.firestore();
 
-// TODO support HALF-PPR, STANDARD
+// TODO support STANDARD
 const Pages = {
   QB: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_QB.txt",
   WRPPR: "https://s3-us-west-1.amazonaws.com/fftiers/out/text_WR-PPR.txt",

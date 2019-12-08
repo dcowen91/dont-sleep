@@ -6,7 +6,8 @@ import {
   Text,
   Button,
   Strong,
-  Table
+  Table,
+  IconButton
 } from "evergreen-ui";
 
 interface Player {
@@ -30,7 +31,7 @@ const OrderedPostions = ["QB", "RBPPR", "WRPPR", "TEPPR", "DST"];
 
 export const Hello = () => {
   const [leagueId, setLeagueId] = React.useState(""); // 469392385332211712
-  const [userId, setuserId] = React.useState(""); //  470018338567745536;
+  const [userId, setuserId] = React.useState(""); //  6;
   const [playerData, setPlayerData] = React.useState<SleeperData>({});
   return (
     <>
@@ -42,6 +43,12 @@ export const Hello = () => {
       >
         <Heading>Don't sleep</Heading>
         <Text>A tool to help power up your fantasy football teams</Text>
+        <IconButton
+          is="a"
+          href="https://github.com/dcowen91/dont-sleep"
+          icon="code"
+          appearance="minimal"
+        />
       </Pane>
       <Pane
         display="flex"
