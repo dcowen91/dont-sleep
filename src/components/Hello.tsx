@@ -100,8 +100,8 @@ export const Hello = () => {
           )}
         {playerData && playerData.fetchedOn && (
           <Text marginTop={10}>
-            data last updated
-            {new Date((playerData as any).fetchedOn).toLocaleString()}
+            {"data last refreshed: " +
+              new Date((playerData as any).fetchedOn).toLocaleString()}
           </Text>
         )}
       </Pane>
