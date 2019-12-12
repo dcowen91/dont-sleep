@@ -9,9 +9,8 @@ mobile app -> "Team" -> Share -> copy to clipboard
 
 ## TODO
 
-1. return and display lastModifiedTime
-2. add github link
-3. add info on how to use
-4. add error handling to ux (league/userId)
-5. add standard league support
-6. convert http function to app callable
+1. add github link
+2. add info on how to use
+3. add error handling to ux (league/userId)
+4. add standard league support
+5. convert http function to app callable
