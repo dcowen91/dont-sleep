@@ -125,6 +125,7 @@ async function getRosterInfo(leagueId, userId) {
     const owned = players.filter(player =>
       userOwnedPlayers.includes(player.playerId)
     );
+    // TODO add unranked but owned players
 
     const unowned = players.filter(player => !merged.includes(player.playerId));
 

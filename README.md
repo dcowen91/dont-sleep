@@ -1,6 +1,6 @@
 # dont-sleep
 
-find the best available players for your sleeper.app league, using data from [borischen.co](borischen.co)
+find the best available players for your sleeper.app league, using data from [borischen.co](https://www.borischen.co)
 
 ## instructions
 

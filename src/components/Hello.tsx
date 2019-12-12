@@ -106,8 +106,11 @@ function renderPositionCard(
   position: string,
   playerData: SleeperData
 ): JSX.Element {
+  // handle user having no ranked players at a given position
   const lowestOwnedRank =
-    playerData[position].owned[playerData[position].owned.length - 1].rank;
+    playerData[position].owned.length > 0
+      ? playerData[position].owned[playerData[position].owned.length - 1].rank
+      : 99;
   return (
     <Pane
       display="flex"
