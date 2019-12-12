@@ -23,6 +23,7 @@ interface Position {
   unowned: Player[];
 }
 
+// TODO fix this to add fetchedOn
 type SleeperData = { [pos: string]: Position };
 
 const OrderedPostions = ["QB", "RBPPR", "WRPPR", "TEPPR", "DST"];
@@ -97,6 +98,12 @@ export const Hello = () => {
           OrderedPostions.map(position =>
             renderPositionCard(position, playerData)
           )}
+        {playerData && playerData.fetchedOn && (
+          <Text marginTop={10}>
+            data last updated
+            {new Date((playerData as any).fetchedOn).toLocaleString()}
+          </Text>
+        )}
       </Pane>
     </>
   );

@@ -132,6 +132,12 @@ async function getRosterInfo(leagueId, userId) {
     output[position] = { owned, unowned };
   }
 
+  // second pass- add any players who are unranked
+  // for (const player of userOwnedPlayers) {
+  // }
+
+  output["fetchedOn"] = tiers.fetchedOn;
+
   return output;
 }
 
