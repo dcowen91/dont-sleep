@@ -98,8 +98,15 @@ export const Hello = () => {
           OrderedPostions.map(position =>
             renderPositionCard(position, playerData)
           )}
+      </Pane>
+      <Pane
+        marginTop={30}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
         {playerData && playerData.fetchedOn && (
-          <Text marginTop={10}>
+          <Text size={300} color="muted">
             {"data last refreshed: " +
               new Date((playerData as any).fetchedOn).toLocaleString()}
           </Text>
