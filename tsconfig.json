@@ -9,10 +9,10 @@
     "target": "es6",
     "jsx": "react",
     "moduleResolution": "node",
-    "noUnusedLocals": true,
     "noUnusedParameters": true,
     "forceConsistentCasingInFileNames": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules"],
   "include": ["./src/**/*"]

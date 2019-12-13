@@ -9,8 +9,7 @@ mobile app -> "Team" -> Share -> copy to clipboard
 
 ## TODO
 
-1. convert http function to app callable
-2. add info on how to use
-3. add error handling to ux (league/userId)
-4. add standard league support
-5. improve input/usage flow
+1. add info on how to use
+2. add error handling to ux (league/userId)
+3. add standard league support
+4. improve input/usage flow

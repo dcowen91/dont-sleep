@@ -9,6 +9,7 @@ import {
   Table,
   IconButton
 } from "evergreen-ui";
+import firebase from "./../util/firebase";
 
 interface Player {
   rank: number;
@@ -76,12 +77,18 @@ export const Hello = () => {
         <Button
           appearance="primary"
           onClick={() => {
-            console.log("CLICKED");
             if (leagueId && userId) {
-              const url = `https://us-central1-dont-sleep-92c89.cloudfunctions.net/fetchRosters?leagueId=${leagueId}&userId=${userId}`;
-              fetch(url)
-                .then(res => res.json())
-                .then(data => setPlayerData(data));
+              console.log(firebase);
+              var getRosterInfo = firebase
+                .functions()
+                .httpsCallable("getRosterInfo");
+
+              getRosterInfo({
+                leagueId: leagueId,
+                userId: userId
+              }).then(result => {
+                setPlayerData(result.data);
+              });
             }
           }}
         >

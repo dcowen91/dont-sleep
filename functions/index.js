@@ -1,7 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const rp = require("request-promise-native");
-const cors = require("cors")({ origin: true });
 
 admin.initializeApp();
 let db = admin.firestore();
@@ -155,16 +154,7 @@ exports.scrapePlayersSchedule = functions.pubsub
       });
   });
 
-exports.fetchRosters = functions.https.onRequest(async (req, res) => {
-  // https://us-central1-dont-sleep-92c89.cloudfunctions.net/fetchRosters?leagueId=469392385332211712&userId=470018338567745536
-  return cors(req, res, async () => {
-    const leagueId = req.query.leagueId;
-    const userId = req.query.userId;
-
-    console.log(`FETCHROSTERS got request for: ${leagueId}.${userId}`);
-
-    const response = await getRosterInfo(leagueId, userId);
-
-    res.status(200).send(response);
-  });
+exports.getRosterInfo = functions.https.onCall(async (data, _context) => {
+  const response = await getRosterInfo(data.leagueId, data.userId);
+  return response;
 });
