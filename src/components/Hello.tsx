@@ -10,6 +10,8 @@ import {
   IconButton
 } from "evergreen-ui";
 import firebase from "./../util/firebase";
+import { BrowserRouter } from "react-router-dom";
+import { Header } from "./Header";
 
 interface Player {
   rank: number;
@@ -36,64 +38,67 @@ export const Hello = () => {
   const [userId, setuserId] = React.useState(""); //  6;
   const [playerData, setPlayerData] = React.useState<SleeperData>({});
   return (
-    <>
+    <BrowserRouter>
+      <Header />
+
       <Pane
         display="flex"
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
+        height={"calc(100vh - 72px)"}
       >
-        <Heading>Don't sleep</Heading>
+        <Heading size={900}>Don't sleep</Heading>
         <Text>A tool to help power up your fantasy football teams</Text>
-        <IconButton
-          is="a"
-          href="https://github.com/dcowen91/dont-sleep"
-          icon="code"
-          appearance="minimal"
-        />
-      </Pane>
-      <Pane
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        margin={15}
-      >
-        <TextInputField
-          marginRight={15}
-          label="league id"
-          value={leagueId}
-          onChange={(e: any) => {
-            setLeagueId(e.target.value);
-          }}
-        />
-        <TextInputField
-          marginRight={15}
-          label="roster id"
-          value={userId}
-          onChange={(e: any) => {
-            setuserId(e.target.value);
-          }}
-        />
-        <Button
-          appearance="primary"
-          onClick={() => {
-            if (leagueId && userId) {
-              console.log(firebase);
-              var getRosterInfo = firebase
-                .functions()
-                .httpsCallable("getRosterInfo");
 
-              getRosterInfo({
-                leagueId: leagueId,
-                userId: userId
-              }).then(result => {
-                setPlayerData(result.data);
-              });
-            }
-          }}
+        <Pane
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          margin={15}
         >
-          Go!
-        </Button>
+          <TextInputField
+            marginRight={15}
+            label="league id"
+            value={leagueId}
+            onChange={(e: any) => {
+              setLeagueId(e.target.value);
+            }}
+          />
+          <TextInputField
+            marginRight={15}
+            label="roster id"
+            value={userId}
+            onChange={(e: any) => {
+              setuserId(e.target.value);
+            }}
+          />
+          <Button
+            appearance="primary"
+            onClick={() => {
+              if (leagueId && userId) {
+                // WEOW CALLING FROM APP WORKS
+                // const url = `https://api.sleeper.app/v1/league/${leagueId}/users`;
+                // fetch(url)
+                //   .then(res => res.json())
+                //   .then(data => console.log(data));
+
+                var getRosterInfo = firebase
+                  .functions()
+                  .httpsCallable("getRosterInfo");
+
+                getRosterInfo({
+                  leagueId: leagueId,
+                  userId: userId
+                }).then(result => {
+                  setPlayerData(result.data);
+                });
+              }
+            }}
+          >
+            Go!
+          </Button>
+        </Pane>
       </Pane>
       <Pane
         display="flex"
@@ -119,7 +124,7 @@ export const Hello = () => {
           </Text>
         )}
       </Pane>
-    </>
+    </BrowserRouter>
   );
 };
 
