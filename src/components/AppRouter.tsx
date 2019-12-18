@@ -8,15 +8,17 @@ import { LandingPage } from "./LandingPage";
 export const AppRouter = () => {
   return (
     <BrowserRouter>
-      <Header />
       <Switch>
         <Route path="/:leagueId/:teamId">
+          <Header />
           <TeamView />
         </Route>
         <Route path="/:leagueId">
+          <Header />
           <LeagueView />
         </Route>
         <Route path="/">
+          <Header />
           <LandingPage />
         </Route>
       </Switch>

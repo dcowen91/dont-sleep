@@ -1,11 +1,17 @@
 import * as React from "react";
-import { Pane, Text, Heading, TextInputField, Button } from "evergreen-ui";
-import { Redirect } from "react-router-dom";
+import {
+  Pane,
+  Text,
+  Heading,
+  TextInputField,
+  Button,
+  Icon
+} from "evergreen-ui";
+import { useHistory } from "react-router-dom";
 
-// TODO pull in content from Hello.tsx
 export const LandingPage = () => {
   const [leagueId, setLeagueId] = React.useState(""); // 469392385332211712
-  const [shouldRedirect, setShouldRedirect] = React.useState(false);
+  let history = useHistory();
 
   return (
     <Pane
@@ -16,11 +22,17 @@ export const LandingPage = () => {
       marginTop={60}
       //   height={"calc(100vh - 72px)"}
     >
-      {shouldRedirect && <Redirect push to={"/" + leagueId} />}
-      <Heading size={900}>Don't sleep</Heading>
-      <Text marginBottom={30}>
-        A tool to help power up your fantasy football teams
-      </Text>
+      <Pane display="flex" alignItems="center" marginBottom={16}>
+        <Icon
+          size={36}
+          marginRight={16}
+          marginTop={4}
+          icon="eye-open"
+          color="#234361"
+        />
+        <Heading size={900}>Don't sleep</Heading>
+      </Pane>
+      <Text>A tool to help power up your fantasy football team</Text>
       <Pane
         display="flex"
         alignItems="center"
@@ -38,14 +50,7 @@ export const LandingPage = () => {
         <Button
           appearance="primary"
           onClick={() => {
-            setShouldRedirect(true);
-            // const url = `https://api.sleeper.app/v1/league/${leagueId}/users`;
-            // fetch(url)
-            //   .then(res => res.json())
-            //   .then(data => console.log(data));
-            // TODO set user data
-            // TODO render Redirect to /leagueId on go
-            // TODO orchestrate data better
+            history.push(`/${leagueId}`);
           }}
         >
           Go!
