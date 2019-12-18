@@ -7,7 +7,7 @@ import {
   Button,
   Strong,
   Table,
-  IconButton
+  Icon
 } from "evergreen-ui";
 import firebase from "./../util/firebase";
 import { BrowserRouter } from "react-router-dom";
@@ -42,14 +42,17 @@ export const Hello = () => {
       <Header />
 
       <Pane
+        marginTop={30}
         display="flex"
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
-        height={"calc(100vh - 72px)"}
       >
-        <Heading size={900}>Don't sleep</Heading>
-        <Text>A tool to help power up your fantasy football teams</Text>
+        <Pane display="flex" alignItems="center">
+          <Icon size={36} marginRight={4} icon="eye-open" color="#234361" />
+          <Heading size={900}>Don't sleep</Heading>
+        </Pane>
+        <Text>A tool to help power up your fantasy football team</Text>
 
         <Pane
           display="flex"
@@ -173,7 +176,7 @@ function renderTableSection(
       </Strong>
       <Table>
         <Table.Head>
-          <Table.TextHeaderCell flexBasis={120}>{title}</Table.TextHeaderCell>
+          <Table.TextHeaderCell flexBasis={120}>Name</Table.TextHeaderCell>
           <Table.TextHeaderCell>Rank</Table.TextHeaderCell>
           <Table.TextHeaderCell>Tier</Table.TextHeaderCell>
         </Table.Head>
