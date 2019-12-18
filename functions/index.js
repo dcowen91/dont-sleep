@@ -102,7 +102,7 @@ async function getRosterInfo(leagueId, userId) {
   );
   var teams = JSON.parse(data);
 
-  const userOwnedPlayers = teams.find(team => team.roster_id === Number(userId))
+  const userOwnedPlayers = teams.find(team => team.owner_id === Number(userId))
     .players;
 
   const allOwnedPlayers = teams.map(team => team.players);
