@@ -10,7 +10,7 @@ export const AppRouter = () => {
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route path="/:leagueId/:/teamId">
+        <Route path="/:leagueId/:teamId">
           <TeamView />
         </Route>
         <Route path="/:leagueId">

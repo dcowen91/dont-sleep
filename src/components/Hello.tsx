@@ -40,7 +40,6 @@ export const Hello = () => {
   return (
     <BrowserRouter>
       <Header />
-
       <Pane
         marginTop={30}
         display="flex"
@@ -59,7 +58,6 @@ export const Hello = () => {
           <Heading size={900}>Don't sleep</Heading>
         </Pane>
         <Text>A tool to help power up your fantasy football team</Text>
-
         <Pane
           display="flex"
           alignItems="center"
@@ -86,12 +84,6 @@ export const Hello = () => {
             appearance="primary"
             onClick={() => {
               if (leagueId && userId) {
-                // WEOW CALLING FROM APP WORKS
-                // const url = `https://api.sleeper.app/v1/league/${leagueId}/users`;
-                // fetch(url)
-                //   .then(res => res.json())
-                //   .then(data => console.log(data));
-
                 var getRosterInfo = firebase
                   .functions()
                   .httpsCallable("getRosterInfo");
