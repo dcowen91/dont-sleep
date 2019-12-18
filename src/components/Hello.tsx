@@ -48,8 +48,14 @@ export const Hello = () => {
         justifyContent="center"
         flexDirection="column"
       >
-        <Pane display="flex" alignItems="center">
-          <Icon size={36} marginRight={4} icon="eye-open" color="#234361" />
+        <Pane display="flex" alignItems="center" marginBottom={16}>
+          <Icon
+            size={36}
+            marginRight={16}
+            marginTop={4}
+            icon="eye-open"
+            color="#234361"
+          />
           <Heading size={900}>Don't sleep</Heading>
         </Pane>
         <Text>A tool to help power up your fantasy football team</Text>

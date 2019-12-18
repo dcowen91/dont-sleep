@@ -1,5 +1,20 @@
-import { Pane, Heading, Icon, IconButton } from "evergreen-ui";
+import { Pane, IconButton, Button, IconName } from "evergreen-ui";
 import * as React from "react";
+
+const HeaderButton = (props: { iconName: IconName; text: string }) => {
+  return (
+    <Button
+      appearance="minimal"
+      iconBefore={props.iconName}
+      style={{ color: "#234361" }}
+      paddingLeft={8}
+      paddingRight={8}
+      height="40"
+    >
+      {props.text}
+    </Button>
+  );
+};
 
 export const Header = () => {
   // TODO render slashes and league /user name from route
@@ -15,9 +30,8 @@ export const Header = () => {
       borderBottom
     >
       <Pane display="flex" justifyContent="center" alignItems="center">
-        <Icon marginRight={2} icon="eye-open" color="#234361" />
-        <Heading>Don't sleep</Heading>
-        {/* <Icon marginRight={10} icon="slash" color="#234361" /> */}
+        <HeaderButton iconName="eye-open" text="Don't sleep" />
+        {/* <HeaderButton iconName="slash" text="LeagueName" /> */}
       </Pane>
       <Pane>
         <IconButton
