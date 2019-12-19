@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
 require("firebase/functions");
 
 let config = require("../../dist/firebase-config.json");

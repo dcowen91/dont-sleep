@@ -1,16 +1,7 @@
 import * as React from "react";
 import { Pane, Text, Heading, Card, Image, Avatar } from "evergreen-ui";
 import { useParams, Link } from "react-router-dom";
-
-interface ITeam {
-  user_id: string;
-  league_id: string;
-  display_name: string;
-  avatar: string | null;
-  metadata: {
-    team_name?: string;
-  };
-}
+import { useLeagueMembers } from "../util/LeagueMembersContext";
 
 const TeamImage = (props: { imageUrl: string | null; teamName: string }) => {
   return props.imageUrl ? (
@@ -35,14 +26,7 @@ const TeamImage = (props: { imageUrl: string | null; teamName: string }) => {
 
 export const LeagueView = () => {
   const { leagueId } = useParams();
-  const [teams, setTeamsData] = React.useState<ITeam[]>([]);
-
-  React.useEffect(() => {
-    const url = `https://api.sleeper.app/v1/league/${leagueId}/users`;
-    fetch(url)
-      .then(res => res.json())
-      .then(data => setTeamsData(data));
-  }, [leagueId]);
+  const teams = useLeagueMembers(leagueId);
 
   return (
     <Pane
@@ -50,6 +34,8 @@ export const LeagueView = () => {
       display="flex"
       alignItems="flex-start"
       justifyContent="center"
+      maxWidth="1330px"
+      marginX="auto"
       flexWrap="wrap"
     >
       {teams.map(team => {

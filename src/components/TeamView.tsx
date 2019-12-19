@@ -66,6 +66,8 @@ export const TeamView = () => {
         display="flex"
         alignItems="flex-start"
         justifyContent="center"
+        maxWidth="1330px"
+        marginX="auto"
         flexWrap="wrap"
       >
         {playerData &&
@@ -90,6 +92,7 @@ function renderPositionCard(
       : 99;
   return (
     <Pane
+      key={position}
       display="flex"
       justifyContent="center"
       flexDirection="column"
@@ -129,19 +132,25 @@ function renderTableSection(
           <Table.TextHeaderCell>Tier</Table.TextHeaderCell>
         </Table.Head>
         <Table.Body>
-          {players.map(player => renderPlayer(player, lowestOwnedRank))}
+          {players.map((player, index) =>
+            renderPlayer(player, index, lowestOwnedRank)
+          )}
         </Table.Body>
       </Table>
     </>
   );
 }
 
-function renderPlayer(player: Player, lowestOwnedRank?: number): JSX.Element {
+function renderPlayer(
+  player: Player,
+  index: number,
+  lowestOwnedRank?: number
+): JSX.Element {
   const intent =
     !!lowestOwnedRank && lowestOwnedRank > player.rank ? "success" : "none";
 
   return (
-    <Table.Row intent={intent}>
+    <Table.Row intent={intent} key={index}>
       <Table.TextCell flexBasis={120}>{player.name}</Table.TextCell>
       <Table.TextCell>{player.rank}</Table.TextCell>
       <Table.TextCell>{player.tier}</Table.TextCell>

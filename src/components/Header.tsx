@@ -1,6 +1,8 @@
 import { Pane, IconButton, Button, IconName } from "evergreen-ui";
 import * as React from "react";
 import { useParams, Link } from "react-router-dom";
+import { useLeagueDetails } from "../util/LeagueDetailsContext";
+import { useLeagueMembers } from "../util/LeagueMembersContext";
 
 const HeaderButton = (props: {
   iconName: IconName;
@@ -26,6 +28,10 @@ const HeaderButton = (props: {
 export const Header = () => {
   // TODO render league name instead of league id
   const { leagueId, teamId } = useParams();
+  const leagueDetails = useLeagueDetails(leagueId);
+  const teams = useLeagueMembers(leagueId);
+  const team = teams.find(team => team.user_id === teamId)
+
   return (
     <Pane
       display={"flex"}
@@ -41,14 +47,14 @@ export const Header = () => {
         {leagueId && (
           <HeaderButton
             iconName="slash"
-            text={leagueId}
+            text={leagueDetails.name}
             route={`/${leagueId}`}
           />
         )}
         {teamId && (
           <HeaderButton
             iconName="slash"
-            text={teamId}
+            text={team?.display_name ?? teamId}
             route={`/${leagueId}/${teamId}`}
           />
         )}
