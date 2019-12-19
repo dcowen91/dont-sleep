@@ -13,3 +13,5 @@ mobile app -> "Team" -> Share -> copy to clipboard
 2. add error handling to ux (league/userId)
 3. add standard league support
 4. improve input/usage flow
+5. add context for sharing league & team data
+6. add error handling for fetching league & team

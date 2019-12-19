@@ -102,8 +102,7 @@ async function getRosterInfo(leagueId, userId) {
   );
   var teams = JSON.parse(data);
 
-  const userOwnedPlayers = teams.find(team => team.owner_id === Number(userId))
-    .players;
+  const userOwnedPlayers = teams.find(team => team.owner_id === userId).players;
 
   const allOwnedPlayers = teams.map(team => team.players);
   var merged = [].concat.apply([], allOwnedPlayers).sort();
