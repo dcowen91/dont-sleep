@@ -25,7 +25,7 @@ const LeagueMembersContext = React.createContext(EmptyLeagueMembersContext);
 export const LeagueMembersProvider = ({
   children
 }: React.PropsWithChildren<{}>) => {
-  // TODO fix double request issue - move this higher?
+  // TODO fix double request issue - move the data fetching into the provider, not in the hook
   const [teams, setTeams] = React.useState<ITeam[]>([]);
 
   return (
