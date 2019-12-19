@@ -97,9 +97,9 @@ function renderPositionCard(
       margin={8}
       flexWrap="wrap"
       borderRadius={5}
-      border
       elevation={1}
       flexBasis={250}
+      border
     >
       <Heading alignSelf={"center"}>{position.replace("PPR", "")}</Heading>
       {renderTableSection("Your Players", positionData.owned)}

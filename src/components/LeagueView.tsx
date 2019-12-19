@@ -66,7 +66,6 @@ export const LeagueView = () => {
               flexDirection="row"
               padding={8}
               margin={8}
-              background="tint2"
               borderRadius={5}
               border
               elevation={1}
