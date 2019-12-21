@@ -5,12 +5,15 @@ import {
   Heading,
   TextInputField,
   Button,
-  Icon
+  Icon,
+  Paragraph,
+  Link,
+  Strong
 } from "evergreen-ui";
 import { useHistory } from "react-router-dom";
 
 export const LandingPage = () => {
-  const [leagueId, setLeagueId] = React.useState(""); // 469392385332211712
+  const [leagueId, setLeagueId] = React.useState("");
   let history = useHistory();
 
   return (
@@ -20,7 +23,6 @@ export const LandingPage = () => {
       justifyContent="center"
       flexDirection="column"
       marginTop={60}
-      //   height={"calc(100vh - 72px)"}
     >
       <Pane display="flex" alignItems="center" marginBottom={16}>
         <Icon
@@ -32,7 +34,14 @@ export const LandingPage = () => {
         />
         <Heading size={900}>Don't sleep</Heading>
       </Pane>
-      <Text>A tool to help power up your fantasy football team</Text>
+      <Text size={500}>Power up your fantasy football team!</Text>
+      <Paragraph marginTop={50} maxWidth={"300px"}>
+        Built using the official sleeper API and data from{" "}
+        <Link color="neutral" target="_blank" href="http://www.borischen.co">
+          borischen.co
+        </Link>
+        . Provide your <Strong>Sleeper league id</Strong> below to get started.
+      </Paragraph>
       <Pane
         display="flex"
         alignItems="center"

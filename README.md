@@ -9,12 +9,11 @@ mobile app -> "Team" -> Share -> copy to clipboard
 
 ## TODO
 
-1. add info on how to use
-2. add error handling to ux (league/userId)
+1. add error handling to ux (league/userId)
 
 ---
 
-3. add standard/ppr league support
-4. parse league for K/roster spots
-5. add tslint to web proj
-6. clean up code
+2. add standard/ppr league support
+3. parse league for K/roster spots
+4. add tslint to web proj
+5. clean up code

@@ -48,6 +48,17 @@ export const TeamView = () => {
   return (
     <>
       <Pane
+        marginTop={30}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        maxWidth="1330px"
+        marginX="auto"
+      >
+        <Heading size={700}>Position rankings</Heading>
+      </Pane>
+      <Pane
+        marginTop={30}
         display="flex"
         alignItems="flex-start"
         justifyContent="center"

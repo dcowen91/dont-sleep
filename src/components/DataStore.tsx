@@ -65,6 +65,7 @@ export const DataStore = ({ children }: React.PropsWithChildren<{}>) => {
     if (teamId) {
       var getRosterInfo = firebase.functions().httpsCallable("getRosterInfo");
 
+      setRankings(undefined);
       getRosterInfo({
         leagueId: leagueId,
         userId: teamId
@@ -76,6 +77,7 @@ export const DataStore = ({ children }: React.PropsWithChildren<{}>) => {
 
   React.useEffect(() => {
     if (leagueId) {
+      setTeams([]);
       const url = `https://api.sleeper.app/v1/league/${leagueId}/users`;
       fetch(url)
         .then(res => res.json())
@@ -85,6 +87,7 @@ export const DataStore = ({ children }: React.PropsWithChildren<{}>) => {
 
   React.useEffect(() => {
     if (leagueId) {
+      setLeagueDetails(undefined);
       const url = `https://api.sleeper.app/v1/league/${leagueId}`;
       fetch(url)
         .then(res => res.json())
