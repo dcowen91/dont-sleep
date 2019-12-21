@@ -1,8 +1,8 @@
 import { Pane, IconButton, Button, IconName } from "evergreen-ui";
 import * as React from "react";
-import { useParams, Link } from "react-router-dom";
-import { useLeagueDetails } from "../util/LeagueDetailsContext";
-import { useLeagueMembers } from "../util/LeagueMembersContext";
+import { Link } from "react-router-dom";
+import { useLeageDetails, useTeams } from "./DataStore";
+import { useRoutes } from "../util/Hooks";
 
 const HeaderButton = (props: {
   iconName: IconName;
@@ -26,11 +26,10 @@ const HeaderButton = (props: {
 };
 
 export const Header = () => {
-  // TODO render league name instead of league id
-  const { leagueId, teamId } = useParams();
-  const leagueDetails = useLeagueDetails(leagueId);
-  const teams = useLeagueMembers(leagueId);
-  const team = teams.find(team => team.user_id === teamId)
+  const { leagueId, teamId } = useRoutes();
+  const leagueDetails = useLeageDetails();
+  const teams = useTeams();
+  const team = teams.find(team => team.user_id === teamId);
 
   return (
     <Pane
@@ -47,7 +46,7 @@ export const Header = () => {
         {leagueId && (
           <HeaderButton
             iconName="slash"
-            text={leagueDetails.name}
+            text={leagueDetails?.name ?? leagueId}
             route={`/${leagueId}`}
           />
         )}

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Pane, Text, Heading, Strong, Table } from "evergreen-ui";
-import { useParams } from "react-router-dom";
-import firebase from "./../util/firebase";
+import { useRankings } from "./DataStore";
 
 const OrderedPostions = ["QB", "RBPPR", "WRPPR", "TEPPR", "DST"];
 
@@ -44,21 +43,7 @@ const TimeStamp = (props: { timeStamp: string }) => {
 };
 
 export const TeamView = () => {
-  const { leagueId, teamId } = useParams();
-  const [playerData, setPlayerData] = React.useState<
-    SleeperTiers | undefined
-  >();
-
-  React.useEffect(() => {
-    var getRosterInfo = firebase.functions().httpsCallable("getRosterInfo");
-
-    getRosterInfo({
-      leagueId: leagueId,
-      userId: teamId
-    }).then(result => {
-      setPlayerData(result.data);
-    });
-  }, [leagueId, teamId]);
+  const playerData = useRankings();
 
   return (
     <>

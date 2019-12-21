@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Pane, Text, Heading, Card, Image, Avatar } from "evergreen-ui";
 import { useParams, Link } from "react-router-dom";
-import { useLeagueMembers } from "../util/LeagueMembersContext";
+import { useTeams } from "./DataStore";
 
 const TeamImage = (props: { imageUrl: string | null; teamName: string }) => {
   return props.imageUrl ? (
@@ -26,7 +26,7 @@ const TeamImage = (props: { imageUrl: string | null; teamName: string }) => {
 
 export const LeagueView = () => {
   const { leagueId } = useParams();
-  const teams = useLeagueMembers(leagueId);
+  const teams = useTeams();
 
   return (
     <Pane
